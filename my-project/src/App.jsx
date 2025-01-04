@@ -25,6 +25,7 @@ function App() {
   };
 
   const handleClick = () => {
+    event.preventDefault();
     setPoint((prevPoint) => prevPoint + 5);
     if (beatRef.current) {
       beatRef.current.currentTime = 0;

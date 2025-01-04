@@ -58,6 +58,10 @@ const CircleGrid = ({handleClick,handleClickOggy}) => {
             <img
               src={Oggy}
               alt="Oggy"
+              style={{
+                userSelect: 'none', 
+                WebkitUserDrag: 'none' 
+              }}
               className="h-18 w-16 absolute"
               onClick={handleClickOggy}
             />
@@ -66,6 +70,10 @@ const CircleGrid = ({handleClick,handleClickOggy}) => {
             <img
               src={cockroach}
               alt="Cockroach"
+              style={{
+                userSelect: 'none', 
+                WebkitUserDrag: 'none' 
+              }}
               className="h-18 w-16 absolute"
               onClick={handleClick}
             />
@@ -74,6 +82,10 @@ const CircleGrid = ({handleClick,handleClickOggy}) => {
             <img
               src={cockroach2}
               alt="Cockroach"
+              style={{
+                userSelect: 'none', 
+                WebkitUserDrag: 'none' 
+              }}
               className="h-16 w-12 absolute"
               onClick={handleClick}
             />
@@ -82,6 +94,10 @@ const CircleGrid = ({handleClick,handleClickOggy}) => {
             <img
               src={cockroach3}
               alt="Cockroach"
+              style={{
+                userSelect: 'none', 
+                WebkitUserDrag: 'none' 
+              }}
               className="h-14 w-[90px] absolute"
               onClick={handleClick}
             />
