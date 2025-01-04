@@ -3,14 +3,22 @@ import bg from "./assets/mainBg.jpg";
 import CircleGrid from "./components/circle";
 import audio from "./assets/startBg.mp3";
 import fail from "./assets/Fail.mp3";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import beat from "./assets/beat.mp3";
-import cursor from './assets/cursor.png';
 
 function App() {
   const [point, setPoint] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [start, setStart] = useState(false);
+  const [highScore, setHighScore] = useState(0);
+
+  useEffect(() => {
+    const savedHighScore = localStorage.getItem("highScore");
+    if (savedHighScore) {
+      setHighScore(Number(savedHighScore));
+    }
+  }, []);
+
   const audioRef = useRef(null);
   const failRef = useRef(null);
   const beatRef = useRef(null);
@@ -25,7 +33,6 @@ function App() {
   };
 
   const handleClick = () => {
-    event.preventDefault();
     setPoint((prevPoint) => prevPoint + 5);
     if (beatRef.current) {
       beatRef.current.currentTime = 0;
@@ -35,6 +42,12 @@ function App() {
 
   const handleClickOggy = () => {
     setGameOver(true);
+
+    if (point > highScore) {
+      localStorage.setItem("highScore", point);
+      setHighScore(point);
+    }
+
     if (failRef.current) {
       failRef.current.play();
     }
@@ -52,9 +65,11 @@ function App() {
             backgroundImage: `url(${bgImg})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
+            userSelect: "none",
+            WebkitUserDrag: "none",
           }}
         >
-          <div className="font-semibold text-[60px] bg-gradient-to-r from-purple-950 via-purple-700 to-purple-950 bg-clip-text text-transparent mb-4">
+          <div className="font-semibold text-[65px] bg-gradient-to-r from-purple-950 via-purple-700 to-purple-950 bg-clip-text text-transparent mb-4">
             Whack a Roach
           </div>
           {!start ? (
@@ -71,9 +86,9 @@ function App() {
             <>
               {gameOver ? (
                 <>
-                  <div className="font-bold text-red-600 text-[40px]">
+                  <div className="font-bold text-red-600 text-[50px]">
                     <audio src={fail} autoPlay />
-                    Game Over! Final Score: {point}
+                    Game Over!
                   </div>
                   <button
                     className="text-orange-50 bg-gradient-to-r from-red-600 via-red-400 to-red-600 opacity-90 text-[25px] rounded-md mt-5 p-2"
@@ -82,12 +97,15 @@ function App() {
                     {" "}
                     Start new Game
                   </button>
+                  <div className="font-semibold text-red-600 text-[30px] mt-5">
+                    Your Score : {point}
+                  </div>
+                  <div className="text-medium text-[30px] text-red-900 mt-4">
+                    Highest Score :{highScore}
+                  </div>
                 </>
               ) : (
-                <div className=" flex flex-col justify-center items-center"
-                  style={{
-                    cursor :`url(${cursor}),auto`,
-                  }}>
+                <div className=" flex flex-col justify-center items-center">
                   <div
                     className="h-[480px] w-[480px] flex justify-center items-center rounded-lg"
                     style={{
